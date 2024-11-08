@@ -15,6 +15,8 @@ FROM 2030047311/openeuler:22.03-nginx as builder
 
 COPY . /
 
+ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+
 RUN dnf update -y \
   && /build.sh
 
