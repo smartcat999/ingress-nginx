@@ -156,43 +156,25 @@ get_src()
 }
 
 # install required packages to build
-apk add \
+dnf install \
   bash \
-  gcc \
   clang \
-  libc-dev \
-  make \
   automake \
-  openssl-dev \
-  pcre-dev \
-  zlib-dev \
-  linux-headers \
-  libxslt-dev \
-  gd-dev \
-  geoip-dev \
-  perl-dev \
-  libedit-dev \
   mercurial \
-  alpine-sdk \
   findutils \
   curl ca-certificates \
   patch \
-  libaio-dev \
-  openssl \
   cmake \
   util-linux \
-  lmdb-tools \
   wget \
-  curl-dev \
-  libprotobuf \
-  git g++ pkgconf flex bison doxygen yajl-dev lmdb-dev libtool autoconf libxml2 libxml2-dev \
+  git g++ pkgconf flex bison doxygen autoconf libxml2 \
   python3 \
-  libmaxminddb-dev \
   bc \
   unzip \
   dos2unix \
   yaml-cpp \
-  coreutils
+  coreutils \
+  gcc gcc-c++ make libtool zlib zlib-devel pcre pcre-devel perl-devel perl-ExtUtils-Embed openssl openssl-devel net-tools* wget libstdc++-devel -y
 
 mkdir -p /etc/nginx
 
@@ -740,7 +722,7 @@ writeDirs=( \
   /var/log/nginx \
 );
 
-adduser -S -D -H -u 101 -h /usr/local/nginx -s /sbin/nologin -G www-data -g www-data www-data
+adduser -u 1001 -s /sbin/nologin -U www-data && chown -R www-data:www-data /usr/local/nginx
 
 for dir in "${writeDirs[@]}"; do
   mkdir -p ${dir};

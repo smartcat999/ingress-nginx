@@ -11,17 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM alpine:3.16.2 as builder
+FROM 2030047311/openeuler:22.03-nginx as builder
 
 COPY . /
 
-RUN apk update \
-  && apk upgrade \
-  && apk add -U bash \
+RUN dnf update -y \
   && /build.sh
 
 # Use a multi-stage build
-FROM alpine:3.16.2
+FROM 2030047311/openeuler:22.03-nginx
 
 ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
 
@@ -32,9 +30,8 @@ COPY --from=builder /usr/local /usr/local
 COPY --from=builder /opt /opt
 COPY --from=builder /etc/nginx /etc/nginx
 
-RUN apk update \
-  && apk upgrade \
-  && apk add -U --no-cache \
+RUN dnf update -y \
+  && dnf install -y \
   bash \
   openssl \
   pcre \
@@ -52,8 +49,8 @@ RUN apk update \
   nano \
   tzdata \
   && ln -s /usr/local/nginx/sbin/nginx /sbin/nginx \
-  && adduser -S -D -H -u 101 -h /usr/local/nginx \
-  -s /sbin/nologin -G www-data -g www-data www-data \
+  && adduser -u 1001 -s /sbin/nologin -U www-data \
+  && chown -R www-data:www-data /usr/local/nginx \
   && bash -eu -c ' \
   writeDirs=( \
   /var/log/nginx \
