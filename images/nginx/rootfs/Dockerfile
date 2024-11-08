@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM 2030047311/openeuler:22.03-nginx as builder
+FROM openeuler/openeuler:22.03 as builder
 
 COPY . /
 
@@ -21,7 +21,7 @@ RUN dnf update -y \
   && /build.sh
 
 # Use a multi-stage build
-FROM 2030047311/openeuler:22.03-nginx
+FROM openeuler/openeuler:22.03
 
 ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
 
