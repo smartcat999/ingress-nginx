@@ -46,9 +46,11 @@ cp /etc/passwd /etc/group /chroot/etc/
 cp -a /usr/* /chroot/usr/
 cp -a /etc/nginx/* /chroot/etc/nginx/
 #cp /lib/ld-musl-* /lib/libcrypto* /lib/libssl* /lib/libz* /chroot/lib/
+dnf install -y findutils
 find /lib \( \
     -name 'ld-musl-*' -o \
     -name 'libcrypto*' -o \
     -name 'libssl*' -o \
     -name 'libz*' \
     \) -exec cp {} /chroot/lib/ \;
+dnf remove -y findutils
