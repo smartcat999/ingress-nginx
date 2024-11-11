@@ -33,10 +33,10 @@ LABEL build_id="${BUILD_ID}"
 
 WORKDIR  /etc/nginx
 
-RUN dnf update -y\
+RUN dnf update -y \
   && dnf install -y \
     diffutils \
-  && adduser -u 1001 -s /sbin/nologin -U www-data \
+#  && adduser -u 1001 -s /sbin/nologin -U www-data \
    && chown -R www-data:www-data /usr/local/nginx
 
 COPY --chown=www-data:www-data etc /etc
