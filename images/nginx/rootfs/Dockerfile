@@ -18,13 +18,15 @@ COPY . /
 ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 
 RUN dnf update -y && \
-    yum groupinstall -y "Development Tools" && \
-    yum install -y \
+    dnf groupinstall -y "Development Tools" && \
+    dnf install -y \
       gcc \
       gcc-c++ \
       libstdc++ \
       libstdc++-devel \
-      libstdc++-static && \
+      libstdc++-static \
+      curl-devel \
+      lua-devel libmaxminddb libmaxminddb-devel GeoIP GeoIP-devel brotli brotli-devel && \
     /build.sh
 
 # Use a multi-stage build
