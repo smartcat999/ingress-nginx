@@ -45,9 +45,8 @@ ENV LUA_PATH="/usr/local/share/luajit-2.1.0-beta3/?.lua;/usr/local/share/lua/5.1
 ENV LUA_CPATH="/usr/local/lib/lua/?/?.so;/usr/local/lib/lua/?.so;;"
 ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
 
-RUN apk update \
-  && apk upgrade \
-  && apk add -U --no-cache \
+RUN dnf update -y \
+  && dnf install -y \
      bash \
      curl \
      openssl \
@@ -57,8 +56,8 @@ RUN apk update \
      diffutils \
      util-linux \
   && ln -s /usr/local/nginx/sbin/nginx /sbin/nginx \
-  && adduser -S -D -H -u 101 -h /usr/local/nginx \
-    -s /sbin/nologin -G www-data -g www-data www-data 
+  && adduser -u 1001 -s /sbin/nologin -U www-data \
+  && chown -R www-data:www-data /usr/local/nginx
 
 COPY --from=chroot /chroot /chroot
 
@@ -79,14 +78,10 @@ RUN bash -xeu -c ' \
   ); \
   for dir in "${writeDirs[@]}"; do \
     mkdir -p ${dir}; \
-    chown -R www-data.www-data ${dir}; \
-  done' \
-  # LD_LIBRARY_PATH does not work so below is needed for  opentelemetry/other modules
-  # Put libs of newer modules under `/modules_mount/<other>/lib` and add that path below
-  # Could get complicated arch specific paths become a need
-  && echo "/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel" > /chroot/etc/ld-musl-x86_64.path
+    chown -R 101:www-data ${dir}; \
+  done'
 
-RUN apk add --no-cache libcap \
+RUN dnf install libcap -y \
   && setcap    cap_sys_chroot,cap_net_bind_service=+ep /nginx-ingress-controller \
   && setcap -v cap_sys_chroot,cap_net_bind_service=+ep /nginx-ingress-controller \
   && setcap    cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/unshare \
@@ -95,7 +90,7 @@ RUN apk add --no-cache libcap \
   && setcap -v cap_net_bind_service=+ep /chroot/usr/local/nginx/sbin/nginx \
   && setcap    cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/dumb-init \
   && setcap -v cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/dumb-init \
-  && apk del libcap
+  && dnf uninstall libcap -y
 
 RUN  ln -sf /chroot/etc/nginx /etc/nginx \
   && ln -sf /chroot/tmp/nginx /tmp/nginx \
@@ -120,6 +115,8 @@ RUN mkdir -p /chroot/modules_mount \
 USER www-data
 
 EXPOSE 80 443
+
+ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
