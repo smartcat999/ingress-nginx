@@ -33,7 +33,7 @@ RUN dnf update -y && \
 FROM openeuler/openeuler:22.03
 
 ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
-ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel
 ENV LUA_PATH="/usr/local/share/luajit-2.1.0-beta3/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/lib/lua/?.lua;;"
 ENV LUA_CPATH="/usr/local/lib/lua/?/?.so;/usr/local/lib/lua/?.so;;"
 
