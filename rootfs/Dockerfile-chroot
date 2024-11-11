@@ -77,7 +77,7 @@ RUN bash -xeu -c ' \
   ); \
   for dir in "${writeDirs[@]}"; do \
     mkdir -p ${dir}; \
-    chown -R 101:www-data ${dir}; \
+    chown -R www-data:www-data ${dir}; \
   done'
 
 RUN dnf install libcap -y \
