@@ -55,7 +55,7 @@ RUN dnf update -y \
      diffutils \
      util-linux \
   && ln -s /usr/local/nginx/sbin/nginx /sbin/nginx \
-#  && adduser -u 1001 -s /sbin/nologin -U www-data \
+  && adduser -u 1001 -s /sbin/nologin -U www-data \
   && chown -R www-data:www-data /usr/local/nginx
 
 COPY --from=chroot /chroot /chroot
