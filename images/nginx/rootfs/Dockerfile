@@ -17,8 +17,15 @@ COPY . /
 
 ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 
-RUN dnf update -y \
-  && /build.sh
+RUN dnf update -y && \
+    yum groupinstall -y "Development Tools" && \
+    yum install -y \
+      gcc \
+      gcc-c++ \
+      libstdc++ \
+      libstdc++-devel \
+      libstdc++-static && \
+    /build.sh
 
 # Use a multi-stage build
 FROM openeuler/openeuler:22.03

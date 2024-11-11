@@ -174,7 +174,7 @@ dnf install \
   dos2unix \
   yaml-cpp \
   coreutils \
-  gcc gcc-c++ make libtool zlib zlib-devel pcre pcre-devel perl-devel perl-ExtUtils-Embed openssl openssl-devel net-tools* wget libstdc++-devel -y
+  gcc gcc-c++ make libtool zlib zlib-devel pcre pcre-devel perl-devel perl-ExtUtils-Embed openssl openssl-devel net-tools* libstdc++-devel -y
 
 mkdir -p /etc/nginx
 
