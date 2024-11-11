@@ -45,4 +45,7 @@ mkdir -p  /chroot/lib /chroot/proc /chroot/usr /chroot/bin /chroot/dev /chroot/r
 cp /etc/passwd /etc/group /chroot/etc/
 cp -a /usr/* /chroot/usr/
 cp -a /etc/nginx/* /chroot/etc/nginx/
-cp /lib/ld-musl-* /lib/libcrypto* /lib/libssl* /lib/libz* /chroot/lib/
+cp /lib/ld-musl-* /chroot/lib/
+cp /lib/libcrypto* /chroot/lib/
+cp /lib/libssl* /chroot/lib/
+cp /lib/libz* /chroot/lib/
