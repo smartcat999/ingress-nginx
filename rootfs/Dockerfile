@@ -70,9 +70,7 @@ RUN dnf install libcap -y \
   && setcap    cap_net_bind_service=+ep /usr/bin/dumb-init \
   && setcap -v cap_net_bind_service=+ep /usr/bin/dumb-init \
 #  && dnf remove libcap -y \
-  && ln -sf /usr/local/nginx/sbin/nginx /usr/bin/nginx \
-  && echo "/usr/local/lib"  >>/etc/ld.so.conf \
-  && ldconfig
+  && ln -sf /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
 ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel

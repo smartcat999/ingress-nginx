@@ -75,7 +75,9 @@ RUN dnf update -y \
   for dir in "${writeDirs[@]}"; do \
   mkdir -p ${dir}; \
   chown -R www-data.www-data ${dir}; \
-  done'
+  done' \
+  && echo "/usr/local/lib"  >>/etc/ld.so.conf \
+  && ldconfig
 
 USER www-data
 

@@ -116,8 +116,6 @@ USER www-data
 
 EXPOSE 80 443
 
-ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel
-
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 CMD ["/nginx-ingress-controller"]
