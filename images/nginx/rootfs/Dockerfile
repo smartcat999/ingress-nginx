@@ -77,6 +77,8 @@ RUN dnf update -y \
   chown -R www-data.www-data ${dir}; \
   done'
 
+USER www-data
+
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
