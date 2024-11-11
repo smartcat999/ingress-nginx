@@ -110,7 +110,9 @@ RUN  ln -sf /chroot/etc/nginx /etc/nginx \
 
 RUN mkdir -p /chroot/modules_mount \
   && mkdir -p modules_mount \
-  && ln -s /modules_mount /chroot/modules_mount
+  && ln -s /modules_mount /chroot/modules_mount \
+  && echo "/usr/local/lib"  >>/etc/ld.so.conf \
+  && ldconfig
 
 USER www-data
 
