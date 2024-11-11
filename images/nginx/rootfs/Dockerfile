@@ -79,8 +79,6 @@ RUN dnf update -y \
   && echo "/usr/local/lib"  >>/etc/ld.so.conf \
   && ldconfig
 
-USER www-data
-
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
