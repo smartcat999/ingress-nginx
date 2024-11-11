@@ -69,7 +69,7 @@ RUN dnf install libcap -y \
   && setcap -v cap_net_bind_service=+ep /usr/local/nginx/sbin/nginx \
   && setcap    cap_net_bind_service=+ep /usr/bin/dumb-init \
   && setcap -v cap_net_bind_service=+ep /usr/bin/dumb-init \
-  && dnf uninstall libcap -y \
+#  && dnf remove libcap -y \
   && ln -sf /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 USER www-data

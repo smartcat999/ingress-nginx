@@ -89,8 +89,8 @@ RUN dnf install libcap -y \
   && setcap    cap_net_bind_service=+ep /chroot/usr/local/nginx/sbin/nginx \
   && setcap -v cap_net_bind_service=+ep /chroot/usr/local/nginx/sbin/nginx \
   && setcap    cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/dumb-init \
-  && setcap -v cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/dumb-init \
-  && dnf uninstall libcap -y
+  && setcap -v cap_sys_chroot,cap_net_bind_service=+ep /usr/bin/dumb-init
+#  && dnf uninstall libcap -y
 
 RUN  ln -sf /chroot/etc/nginx /etc/nginx \
   && ln -sf /chroot/tmp/nginx /tmp/nginx \
