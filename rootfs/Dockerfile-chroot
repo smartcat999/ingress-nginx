@@ -54,6 +54,7 @@ RUN dnf update -y \
      tzdata \
      diffutils \
      util-linux \
+  && mkdir -p /usr/local/nginx \
   && ln -s /usr/local/nginx/sbin/nginx /sbin/nginx \
   && adduser -u 1001 -s /sbin/nologin -U www-data \
   && chown -R www-data:www-data /usr/local/nginx
