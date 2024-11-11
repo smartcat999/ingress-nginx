@@ -72,13 +72,17 @@ RUN dnf install libcap -y \
 #  && dnf remove libcap -y \
   && ln -sf /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
+ENV PATH=$PATH:/usr/local/luajit/bin:/usr/local/nginx/sbin:/usr/local/nginx/bin
+ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel
+ENV LUA_PATH="/usr/local/share/luajit-2.1.0-beta3/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/lib/lua/?.lua;;"
+ENV LUA_CPATH="/usr/local/lib/lua/?/?.so;/usr/local/lib/lua/?.so;;"
+
 USER www-data
 
 # Create symlinks to redirect nginx logs to stdout and stderr docker log collector
 RUN  ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENV LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/modules_mount/etc/nginx/modules/otel
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
