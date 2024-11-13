@@ -733,4 +733,4 @@ rm -rf /etc/nginx/owasp-modsecurity-crs/.git
 rm -rf /etc/nginx/owasp-modsecurity-crs/util/regression-tests
 
 # remove .a files
-find /usr/local -name "*.a" -print | xargs /bin/rm
+find /usr/local -name "*.a" -print | xargs -I {} /bin/rm {}
